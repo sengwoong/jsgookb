@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    // https://www.piesocket.com/websocket-tester
+
+    const socket = new WebSocket(
+      "wss://demo.piesocket.com/v3/channel_123?api_key=VCXCEuvhGcBDP7XhiJJUDvR1e1D3eiVjgZ9VRiaV&notify_self"
+    );
+
+    socket.onopen = (e) => {
+      alert("[open] 커넥션이 만들어졌습니다.");
+      alert("데이터를 서버에 전송해봅시다.");
+      socket.send("My name is Bora");
+    };
+
+    socket.onmessage = (e) => {
+      alert(`[message] 데이터를 받았습니다. ${e.data}`);
+    };
+
+    socket.onclose = (e) => {
+      if (e.wasClean) {
+        alert(
+          `[close] 커넥션이 종료되었습니다. 코드: ${e.code} 이유: ${e.reason}`
+        );
+      } else {
+        alert("[close] 커넥션이 끊겼습니다. 연결을 다시 시도해봅시다.");
+      }
+    };
+
+    socket.onerror = (e) => {
+      alert(`[error] ${e.message}`);
+    };
+  </script>
+</html>
